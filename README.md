@@ -6,7 +6,7 @@ This package is a MATLAB implementation of the *Rotation alignment of a camera¨C
 
 If you use this package in an academic work, please cite:
 
-             @article{Yu:21,
+@article{Yu:21,
 	author = {Yingjian Yu and Banglei Guan and Xiangyi Sun and Zhang Li and Friedrich Fraundorfer},
 	journal = {Appl. Opt.},
 	keywords = {Cameras; Detectors; Gyroscopes; Image metrics; Image registration; Imaging noise},
@@ -28,18 +28,29 @@ If you use this package in an academic work, please cite:
 * **Key function API**: [ RError,TError ] = get1acResult( Rimu1,Rimu2,A, Rfirst,x1,x2,Rzyxall,T12,d);
 
 * **Input data for API**:
-  Rimu1 3x3 -the rotation matrix from IMU1 to world frame 
+
+  Rimu1 3x3 -the rotation matrix from IMU1 to world frame
+
   Rimu2 3x3 -the rotation matrix from IMU2 to world frame
-  (A, x1,x2)    - The A is the 2x2  affine matrix of affine correspondence, the x1 and x2 are the normalized image point correspondence  
-  Rfirst           - The initial rotation matrix between camera and IMU
-  Rzyxall         - The ground truth of the rotation matrix between camera and IMU
+
+  (A, x1,x2)    - The A is the 2x2  affine matrix of affine correspondence, the x1 and x2 are the normalized image point correspondence.
+  
+  Rfirst           - The initial rotation matrix between camera and IMU.
+
+  Rzyxall         - The ground truth of the rotation matrix between camera and IMU.
+
   T12              - The translation vector between camera1 and camera2.
-  Let  eye1, eye2 be position coordinates in world frame of camera1 and camera2, then T12 =-( eye2 - eye1)';
-  d                  - The distance from eye1 to the plane
+
+  Let  eye1, eye2 be position coordinates in world frame of camera1 and camera2, then T12 =-( eye2 - eye1)'.
+
+  d                  - The distance from eye1 to the plane.
+
 * **Output data of API**:
-  RError     - The error of the estimated rotation matrix between
-  camera and IMU
-  TError          - The error of the recovered translation vector
-  between camera1 and  camera2.
+
+  RError     - The error of the estimated rotation matrix between camera and IMU.
+
+  TError     - The error of the recovered translation vector between camera1 and  camera2.
+
 * **Input Data for demo**:
+
 data.mat
