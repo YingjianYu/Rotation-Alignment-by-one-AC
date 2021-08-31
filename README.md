@@ -6,7 +6,8 @@ This package is a MATLAB implementation of the *Rotation alignment of a camera¨C
 
 If you use this package in an academic work, please cite:
 
-@article{Yu:21,
+
+	@article{Yu:21,
 	author = {Yingjian Yu and Banglei Guan and Xiangyi Sun and Zhang Li and Friedrich Fraundorfer},
 	journal = {Appl. Opt.},
 	keywords = {Cameras; Detectors; Gyroscopes; Image metrics; Image registration; Imaging noise},
