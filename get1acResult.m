@@ -1,9 +1,9 @@
 function [ RError,TError ] = get1acResult( Rimu1,Rimu2,A, Rfirst,x1,x2,Rzyxall,T12,d)
 %get1acResult 
 % input parameters
-%   Rimu1 3¡Á3 -the rotation matrix from IMU1 to world frame 
-%   Rimu2 3¡Á3 -the rotation matrix from IMU2 to world frame
-%   (A, x1,x2)    - The A is the 2¡Á2  affine matrix of affine correspondence, the x1 and x2 are the normalized image point correspondence  
+%   Rimu1 3x3 -the rotation matrix from IMU1 to world frame 
+%   Rimu2 3x3 -the rotation matrix from IMU2 to world frame
+%   (A, x1,x2)    - The A is the 2x2  affine matrix of affine correspondence, the x1 and x2 are the normalized image point correspondence  
 %   Rfirst           - The initial rotation matrix between camera and IMU
 %   Rzyxall         - The ground truth of the rotation matrix between camera and IMU
 %   T12              - The translation vector between camera1 and camera2.
@@ -28,7 +28,6 @@ function [ RError,TError ] = get1acResult( Rimu1,Rimu2,A, Rfirst,x1,x2,Rzyxall,T
             
             for k = 1:nsx
                 Rsmall = ComposeRfromrxryrz_smallangle(rxGB(k),ryGB(k),rzGB(k));
-%                 Rsmall=eye(3)+skew([rxGB(k),ryGB(k),rzGB(k)]);
                 RzyxallGB=Rsmall*Rfirst;
                 RError0=acos((trace(Rzyxall*RzyxallGB.')-1)/2)*(180/pi);
                 if abs(RError0) < abs(RError)   % Record best solution
