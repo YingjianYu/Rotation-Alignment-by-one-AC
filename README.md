@@ -1,5 +1,5 @@
 # Rotation-Alignment-by-one-AC
-This package is a MATLAB implementation of the *Rotation alignment of a camera¨CIMU system using a single affine correspondence* [1]. It includes a demo and corresponding data for rotation alignment of a camera-IMU system using only a single affine correspondence in minimal case.
+This package is a MATLAB implementation of the *Rotation alignment of a camera-IMU system using a single affine correspondence* [1]. It includes a demo and corresponding data for rotation alignment of a camera-IMU system using only a single affine correspondence in minimal case.
 **Authors:** Yu Yingjian, Banglei Guan et al.
 # Reference
 [1] Yingjian Yu, Banglei Guan, Xiangyi Sun, Zhang Li, and Friedrich Fraundorfer, "Rotation alignment of a camera¨CIMU system using a single affine correspondence," Appl. Opt. 60, 7455-7465 (2021).
