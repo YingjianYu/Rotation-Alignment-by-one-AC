@@ -1,7 +1,20 @@
-function [ min_error,TError ] = get1acResult( Rimu1,Rimu2,A, Rfirst,x1,x2,Rzyxall,T12,d)
-%UNTITLED8 此处显示有关此函数的摘要
-%   此处显示详细说明
- [rxGB, ryGB, rzGB, txGB, tyGB, tzGB] = OneAc0(Rimu1(1,1), Rimu1(2,1), Rimu1(3,1), Rimu1(1,2), Rimu1(2,2), Rimu1(3,2), Rimu1(1,3), Rimu1(2,3), Rimu1(3,3), ...
+function [ RError,TError ] = get1acResult( Rimu1,Rimu2,A, Rfirst,x1,x2,Rzyxall,T12,d)
+%get1acResult 
+% input parameters
+%   Rimu1 3×3 -the rotation matrix from IMU1 to world frame 
+%   Rimu2 3×3 -the rotation matrix from IMU2 to world frame
+%   (A, x1,x2)    - The A is the 2×2  affine matrix of affine correspondence, the x1 and x2 are the normalized image point correspondence  
+%   Rfirst           - The initial rotation matrix between camera and IMU
+%   Rzyxall         - The ground truth of the rotation matrix between camera and IMU
+%   T12              - The translation vector between camera1 and camera2.
+%   Let  eye1, eye2 be position coordinates in world frame of camera1 and camera2, then T12 =-( eye2 - eye1)';
+%   d                  - The distance from eye1 to the plane
+% output parameters
+%   RError     - The error of the estimated rotation matrix between
+%   camera and IMU
+%   TError          - The error of the recovered translation vector
+%   between camera1 and  camera2.
+[rxGB, ryGB, rzGB, txGB, tyGB, tzGB] = OneAc0(Rimu1(1,1), Rimu1(2,1), Rimu1(3,1), Rimu1(1,2), Rimu1(2,2), Rimu1(3,2), Rimu1(1,3), Rimu1(2,3), Rimu1(3,3), ...
               Rimu2(1,1), Rimu2(2,1), Rimu2(3,1), Rimu2(1,2), Rimu2(2,2), Rimu2(3,2), Rimu2(1,3), Rimu2(2,3), Rimu2(3,3), ...
             A(1,1), A(2,1), A(1,2), A(2,2), ...
              Rfirst(1,1), Rfirst(2,1), Rfirst(3,1), Rfirst(1,2), Rfirst(2,2), Rfirst(3,2),Rfirst(1,3),Rfirst(2,3),Rfirst(3,3),...
@@ -11,16 +24,16 @@ function [ min_error,TError ] = get1acResult( Rimu1,Rimu2,A, Rfirst,x1,x2,Rzyxal
         nsx = size(rxGB,2);
         if nsx > 0  % We have several solutions each of which must be tested
             bestindex = 1;     % Initial allocation of best solution
-            min_error = inf;     % Number of inliers
+            RError = inf;     % Number of inliers
             
             for k = 1:nsx
                 Rsmall = ComposeRfromrxryrz_smallangle(rxGB(k),ryGB(k),rzGB(k));
 %                 Rsmall=eye(3)+skew([rxGB(k),ryGB(k),rzGB(k)]);
                 RzyxallGB=Rsmall*Rfirst;
-                RError=acos((trace(Rzyxall*RzyxallGB.')-1)/2)*(180/pi);
-                if abs(RError) < abs(min_error)   % Record best solution
+                RError0=acos((trace(Rzyxall*RzyxallGB.')-1)/2)*(180/pi);
+                if abs(RError0) < abs(RError)   % Record best solution
                     bestindex = k;
-                    min_error = RError;
+                    RError = RError0;
                 end
             end
             rxGBC = rxGB(bestindex);
@@ -36,7 +49,7 @@ function [ min_error,TError ] = get1acResult( Rimu1,Rimu2,A, Rfirst,x1,x2,Rzyxal
                 TError=0;
             end
         else
-            min_error=[];
+            RError=[];
             TError=[];
         end
 end
